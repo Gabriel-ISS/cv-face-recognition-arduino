@@ -2,6 +2,7 @@ import cv2
 import serial
 import time
 import mediapipe as mp
+import config
 
 
 class PuenteDeConexion:
@@ -79,7 +80,7 @@ def marcar_rostro(deteccion, fotograma: cv2.typing.MatLike):
 # Cremos el puente de comunicación
 # Estableciendo el puerto COM de la computadora
 # y los bauidios (cantidad de intercambio de datos por segundo)
-puente = PuenteDeConexion(6, 9600)
+puente = PuenteDeConexion(config.COM_PORT, config.BAUD_RATE)
 
 # Preparamos la captura de pantall
 capture_width = 640
