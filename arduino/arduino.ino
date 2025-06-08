@@ -19,8 +19,8 @@ void setup()
   servoV.attach(pServoV);
 
   // establecemos un angulo inicial
-  servoH.write(-15);
-  servoV.write(30);
+  servoH.write(0);
+  servoV.write(15);
 
   // configuramos la conexion serial
   Serial.begin(velocidadDeConexion);

@@ -2,18 +2,24 @@
 
 ## Configuración inicial
 
-⚠️ IMPORTANTE: La dependencia `mediapipe` no esta disponible en Python 3.13. Usa la version 3.12.
+Instala conda y luego ejecuta los siguientes comandos
 
-```bash
-# crear el entorno
-python -m venv .venv
+```pwsh
+# Crear el entorno. Usamos python 3.9 porque es compatible con la version de tensorflow que necesitamos
+conda env create -f environment.yml
 
 # activar el entorno
-.venv\Scripts\activate
-
-# instalar las librerias necesarias
-pip install -r requirements.txt
+conda activate face-recognition-gpu
 ```
+
+### En caso de querer usar la GPU
+
+1. Instala [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads) y [cuDNN][https://developer.nvidia.com/cudnn].
+1. Ejecuta:
+    ```pwsh
+    # Habilita las rutas largas paratensorflow en modo administrador
+    New-ItemProperty -Path"HKLM:\SYSTEM\CurrentControlSet\Control\FieSystem" -Name "LongPathsEnabled" -Value 1-PropertyType DWORD -Force
+    ```
 
 ## Arranque
 
@@ -24,6 +30,9 @@ pip install -r requirements.txt
     # debe coincidir con el puerto del Arduino
     COM_PORT = 6
     BAUD_RATE = 9600
+    CAPTURE_WIDTH = 1920
+    CAPTURE_HEIGHT = 1080
+    TARGET_FPS = 60
     ```
 1. Cierra Arduino IDE y cualquier otro programa que pueda esta utilizando el puerto.
 1. Ejecuta `python vision_python/main.py` para iniciar el proyecto.
