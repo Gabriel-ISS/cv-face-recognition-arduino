@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from server import config
 
 
@@ -7,15 +9,15 @@ def get_commands(face_center_x: int, face_center_y: int):
     h_section = int(config.CAPTURE_WIDTH / 7)
     if cx < h_section:
         h_position = "v1"
-    elif cx < h_section * 2:
+    elif h_section <= cx < h_section * 2:
         h_position = "v2"
-    elif cx < h_section * 3:
+    elif h_section * 2 <= cx < h_section * 3:
         h_position = "v2"
-    elif cx < h_section * 4:
+    elif h_section * 3 <= cx < h_section * 4:
         h_position = "v4"
-    elif cx < h_section * 5:
+    elif h_section * 4 <= cx < h_section * 5:
         h_position = "v5"
-    elif cx < h_section * 6:
+    elif h_section * 5 <= cx < h_section * 6:
         h_position = "v6"
     else:
         h_position = "v7"
@@ -23,7 +25,7 @@ def get_commands(face_center_x: int, face_center_y: int):
     v_section = int(config.CAPTURE_HEIGHT / 3)
     if cy < v_section:
         v_position = "h1"
-    elif cx < v_section * 2:
+    elif h_section <= cy < v_section * 2:
         v_position = "h2"
     else:
         v_position = "h3"

@@ -9,7 +9,7 @@ from server import config
 from server.utils.command_selector import get_commands
 from server.utils.connection_bridge import ConnectionBridge
 from server.utils.face import Face
-from server.utils.face_selector import select_face
+from server.utils.face_selector import FaceSelector
 from server.utils.face_tracker import FaceTracker
 from server.utils.frame_rate_drawer import FrameRateDrawer
 from server.utils.kalman_filter import MultiKalmanFilter
@@ -39,6 +39,7 @@ size_kalman = MultiKalmanFilter()
 faces_identifier.on_face_removed(
     lambda face_id: position_kalman.kalmans.pop(face_id, None)
 )  # Elimina el KalmanFilter asociado a la cara eliminada
+face_selector = FaceSelector()
 wait_time = 1 / config.TARGET_FPS
 
 while True:
@@ -76,12 +77,12 @@ while True:
 
         if faces:
             # Si hay caras detectadas, tomamos la más grande
-            largest_face = select_face(faces)
+            selected_face = face_selector.select_face(faces)
 
             # Determina comandos según la posición del rostro
             h_position, v_position = get_commands(
-                largest_face.center_x,  # type: ignore
-                largest_face.center_y,  # type: ignore
+                selected_face.center_x,  # type: ignore
+                selected_face.center_y,  # type: ignore
             )
 
             # Enviamos las posiciones en X e Y

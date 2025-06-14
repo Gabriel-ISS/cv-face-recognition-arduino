@@ -1,17 +1,16 @@
-from typing import Tuple, Union
+from typing import Tuple
 
 import cv2
 
 
 class Face:
-    id: Union[int, None] = None
+    id = -1
     x: int
     y: int
     width: int
     height: int
     center_x: int
     center_y: int
-    relative_size: float
 
     rectangle_color: Tuple[int, int, int] = (0, 255, 0)  # Green
 
@@ -29,7 +28,6 @@ class Face:
         self.height = height
         self.center_x = x + width // 2
         self.center_y = y + height // 2
-        self.relative_size = (bbox.width + bbox.height) / 2
 
     def mark(self, frame):
         """Dibuja el rostro detectado en el fotograma."""
