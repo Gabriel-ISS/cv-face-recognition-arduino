@@ -10,22 +10,16 @@ conda env create -f environment.yml
 
 # activar el entorno
 conda activate face-recognition-gpu
+
+# Habilita las rutas largas para tensorflow en modo administrador
+New-ItemProperty -Path"HKLM:\SYSTEM\CurrentControlSet\Control\FieSystem" -Name "LongPathsEnabled" -Value 1-PropertyType DWORD -Force
 ```
-
-### En caso de querer usar la GPU
-
-1. Instala [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads) y [cuDNN][https://developer.nvidia.com/cudnn].
-1. Ejecuta:
-    ```pwsh
-    # Habilita las rutas largas paratensorflow en modo administrador
-    New-ItemProperty -Path"HKLM:\SYSTEM\CurrentControlSet\Control\FieSystem" -Name "LongPathsEnabled" -Value 1-PropertyType DWORD -Force
-    ```
 
 ## Arranque
 
 1. Compila el código del Arduino y cárgalo. Asegúrate de conectar cada servomotor en el sitio correcto.
 1. Verifica el puerto COM en el que esta conectado el Arduino.
-1. Agrega el archivo `vision_python/config.py` y agrégale el siguiente contenido:
+1. Agrega el archivo `server/config.py` y agrégale el siguiente contenido:
     ```python
     # debe coincidir con el puerto del Arduino
     COM_PORT = 6
@@ -33,6 +27,7 @@ conda activate face-recognition-gpu
     CAPTURE_WIDTH = 1920
     CAPTURE_HEIGHT = 1080
     TARGET_FPS = 60
+    CAMERA = 0
     ```
 1. Cierra Arduino IDE y cualquier otro programa que pueda esta utilizando el puerto.
-1. Ejecuta `python vision_python/main.py` para iniciar el proyecto.
+1. Ejecuta `python -m server.main` para iniciar el proyecto.

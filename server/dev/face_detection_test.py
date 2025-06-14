@@ -1,11 +1,12 @@
-import cv2
 import time
+
+import cv2
 import mediapipe as mp
 import tensorflow as tf
 
-import config
-import frame_rate_drawer
-import face_marker
+from server import config
+from server.utils.face import Face
+from server.utils.frame_rate_drawer import FrameRateDrawer
 
 # Verifica si hay GPUs disponibles
 gpus = tf.config.list_physical_devices("GPU")
@@ -15,7 +16,7 @@ else:
     print("No se encontró ninguna GPU.")
 
 
-screen_capture = cv2.VideoCapture(0)
+screen_capture = cv2.VideoCapture(config.CAMERA)
 screen_capture.set(cv2.CAP_PROP_FRAME_WIDTH, config.CAPTURE_WIDTH)
 screen_capture.set(cv2.CAP_PROP_FRAME_HEIGHT, config.CAPTURE_HEIGHT)
 
@@ -23,7 +24,7 @@ face_detector = mp.solutions.face_detection.FaceDetection(  # type: ignore
     model_selection=0, min_detection_confidence=0.5
 )
 
-frame_rate_drawer = frame_rate_drawer.FrameRateDrawer()
+frame_rate_drawer = FrameRateDrawer()
 wait_time = 1 / config.TARGET_FPS
 
 while True:
@@ -40,7 +41,9 @@ while True:
 
     if result.detections:
         for detection in result.detections:
-            face_marker.mark_face(detection, frame)
+            h, w, _ = frame.shape
+            face = Face(detection, (w, h))
+            face.mark(frame)
 
     frame_rate_drawer.update(frame)
     cv2.imshow("frame", frame)

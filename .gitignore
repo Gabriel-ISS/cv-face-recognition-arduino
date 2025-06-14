@@ -1,5 +1,3 @@
-/.venv
-
-/vision_python/config.py
-/vision_python/__pycache__/
-/vision_python/*.pyc
+/server/config.py
+*/**/__pycache__/
+*/**/*.pyc

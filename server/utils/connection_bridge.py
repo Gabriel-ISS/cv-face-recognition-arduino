@@ -13,10 +13,12 @@ class ConnectionBridge:
     cached_commands = {}
 
     ser: Union[serial.Serial, None] = None
+    debug: bool = False
 
-    def __init__(self, COM: int, BAUD: int):
-        # Configuración del puerto serial
-        self.ser = serial.Serial("COM" + str(COM), BAUD)
+    def __init__(self, COM: int, BAUD: int, debug: bool = False):
+        self.debug = debug
+        if not debug:
+            self.ser = serial.Serial("COM" + str(COM), BAUD)
 
     def enviar(self, comando: str, cache_key: str = ""):
         """Envía un comando
@@ -25,14 +27,13 @@ class ConnectionBridge:
             comando (str): Comando a enviar.
             cache_key (str, optional): Evita que el mismo comando se envié de seguido. Por defecto es "".
         """
-        if self.ser is None:
-            return
-
         if comando == self.cached_commands.get(cache_key, ""):
             return
 
         print(f"Enviando: {comando}")
-        self.ser.write((comando + "\n").encode())
+
+        if self.ser:
+            self.ser.write((comando + "\n").encode())
 
         if cache_key:
             self.cached_commands[cache_key] = comando

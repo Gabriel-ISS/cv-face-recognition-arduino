@@ -33,39 +33,44 @@ void loop()
     return;
 
   // movemos el servo en horizontal
-  if (entradaSerial == "izq1")
+  if (entradaSerial == "v1")
   {
     moverServo("x", -15);
   }
-  else if (entradaSerial == "izq2")
+  else if (entradaSerial == "v2")
+  
   {
     moverServo("x", -5);
   }
-  else if (entradaSerial == "izq3")
+  else if (entradaSerial == "v3")
   {
     moverServo("x", 5);
   }
-  else if (entradaSerial == "ctr")
+  else if (entradaSerial == "v4")
   {
     moverServo("x", 15);
   }
-  else if (entradaSerial == "der3")
+  else if (entradaSerial == "v5")
   {
     moverServo("x", 25);
   }
-  else if (entradaSerial == "der2")
+  else if (entradaSerial == "v6")
   {
     moverServo("x", 35);
   }
-  else if (entradaSerial == "der1")
+  else if (entradaSerial == "v7")
   {
     moverServo("x", 45);
   }
-  else if (entradaSerial == "arriba")
+  else if (entradaSerial == "h1")
   {
     moverServo("y", 30);
   }
-  else if (entradaSerial == "abajo")
+  else if (entradaSerial == "h2")
+  {
+    moverServo("y", 15);
+  }
+  else if (entradaSerial == "h3")
   {
     moverServo("y", 0);
   }
